@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html style="height:100%">
+<head>
+	<title>Weather Prediction</title>
+	<style>
+	 /* Set the size of the div element that contains the map */
+	#map {
+		height: calc(100% - 120px);/* The height is 400 pixels */
+		width: 100%;/* The width is the width of the web page */
+	}
+	</style>
+	<script>
+		// Initialize and add the map
+		/*function initMap() {
+		// The location of Uluru
+			var uluru = {lat: -25.344, lng: 131.036};
+			// The map, centered at Uluru
+			var map = new google.maps.Map(
+				document.getElementById('map'), {zoom: 4, center: uluru});
+			// The marker, positioned at Uluru
+			var marker = new google.maps.Marker({position: uluru, map: map});
+		}*/
+		function initMap() {
+			var startLng = 97.261127;
+			var lngKm = 1/110.574;
+			var startLat = 20.609155;
+			var latKm = 1/111.320;
+			var map = new google.maps.Map(document.getElementById('map'), {
+				zoom: 5.5,
+				center: {lat: startLat - 840*latKm, lng: startLng + 470*lngKm},
+				mapTypeId: 'terrain'
+			});
+
+			// Define the LatLng coordinates for the polygon's path.
+			var triangleCoords = [
+				{lat: startLat, lng: startLng},
+				{lat: startLat, lng:  startLng + 940*lngKm},
+				{lat: startLat - 730*latKm, lng:  startLng + 940*lngKm},
+				{lat: startLat - 730*latKm, lng: startLng + 640*lngKm},
+				{lat: startLat - 1680*latKm, lng: startLng + 640*lngKm},
+				{lat: startLat - 1680*latKm, lng: startLng},
+				{lat: startLat, lng: startLng}
+			];
+
+			// Construct the polygon.
+			var bermudaTriangle = new google.maps.Polygon({
+				paths: triangleCoords,
+				strokeColor: '#FF0000',
+				strokeOpacity: 0.8,
+				strokeWeight: 2,
+				fillColor: '#FF0000',
+				fillOpacity: 0.35
+			});
+			bermudaTriangle.setMap(map);
+		}
+	</script>
+				<!--Load the API from the specified URL
+				* The async attribute allows the browser to render the page while the API loads
+				* The key parameter will contain your own API key (which is not needed for this tutorial)
+				* The callback parameter executes the initMap() function
+				-->
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDanBsuagyziO506YSB1p0RzdriGllUw8g&callback=initMap"></script>
+</head>
+<body style="height:100%;margin:0px;">
+	<div  style="height:100%;margin:0px;padding-left:40px;padding-right:40px;">
+		<div style="margin:0px;height:80px;font-size: 24px;font-weight: bold;">
+			<br>
+			Prediction boundary
+		</div>
+		<!--The div element for the map -->
+		<div id="map"></div>
+	</div>
+</body>
+</html>
